@@ -9,6 +9,7 @@ services:
     restart: always
     environment:
       DBHOST: ${MONGODB_HOST:-uwazi-mongo}
+      DBPORT: ${MONGODB_PORT:-27017}
       DATABASE_NAME: ${DATABASE_NAME:-uwazi_prod}
       ELASTICSEARCH_URL: ${ELASTICSEARCH_URL:-http://uwazi-elasticsearch:9200}
       INDEX_NAME: ${ELASTICSEARCH_INDEX_NAME:-uwazi_prod}
