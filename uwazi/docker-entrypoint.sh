@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -Eeo pipefail
+set -Ee
 
 # evaluate first run or not first run
 DB_URL"mongodb://$MONGODB_HOST:27017"
