@@ -1,0 +1,44 @@
+version: '3.8'
+services:
+  uwazi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: uwazi
+    restart: always
+    environment:
+      DBHOST: ${MONGODB_HOST:-uwazi-mongo}
+      DATABASE_NAME: ${DATABASE_NAME:-uwazi_prod}
+      ELASTICSEARCH_URL: ${ELASTICSEARCH_URL:-http://uwazi-elasticsearch:9200}
+      INDEX_NAME: ${ELASTICSEARCH_INDEX_NAME:-uwazi_prod}
+      PORT: ${VIRTUAL_PORT:-3000}
+      UPLOADS_FOLDER: ${UWAZI_UPLOAD_FOLDER_PATH:-/data/uploaded_documents}
+      LOGS_DIR: ${UWAZI_LOGS_FOLDER_PATH:-/data/logs}
+      LOCALHOST_ONLY: ${UWAZI_LOCALHOST_ONLY:-true}
+      USE_GRAYLOG: ${UWAZI_USE_GRAYLOG:-false}
+      CUSTOM_UPLOADS_FOLDER: ${UWAZI_CUSTOM_UPLOADS_PATH:-/data/custom_uploads}
+      TEMPORAL_FILES_FOLDER: ${UWAZI_TEMPORAL_FILES_PATH:-/data/temporal_files}
+      VIRTUAL_HOST: ${VIRTUAL_HOST}
+      VIRTUAL_PORT: ${VIRTUAL_PORT:-3000}
+      LETSENCRYPT_HOST: ${VIRTUAL_HOST}
+      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
+
+      NODE_ENV: production 
+      FILES_ROOT_PATH: /home/uwazi/uwazi/
+    volumes:
+      - uwazi:/data
+    networks:
+      - uwazi
+      - proxy
+
+volumes:
+  uwazi:
+networks:
+  uwazi:
+  dependencies:
+    external: true
+    name: uwazi_dependencies
+  proxy:
+    external: true
+    name: http-proxy_proxy
+
