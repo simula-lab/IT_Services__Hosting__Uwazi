@@ -12,20 +12,17 @@ RUN apt-get update && \
     apt-get install -y mongodb-org
 
 RUN useradd -ms /bin/bash uwazi
-WORKDIR /home/uwazi
+WORKDIR /root
 
 RUN wget https://github.com/huridocs/uwazi/releases/latest/download/uwazi.tgz
 RUN tar xvf uwazi.tgz
 RUN mv prod latest 
 RUN rm uwazi.tgz
 
-RUN chown -R uwazi:uwazi . 
-USER uwazi
-
-ENV FILES_ROOT_PATH=/home/uwazi/
 ENV NODE_ENV=production
+ENV FILES_ROOT_PATH=/root/latest
+WORKDIR /root/latest
 
-ENV FILES_ROOT_PATH=/home/uwazi/
-COPY --chown=uwazi:uwazi docker-entrypoint.sh ./docker-entrypoint.sh
+COPY docker-entrypoint.sh ./docker-entrypoint.sh
 
 ENTRYPOINT ["./docker-entrypoint.sh"]

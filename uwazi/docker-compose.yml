@@ -1,6 +1,7 @@
 version: '3.8'
 services:
   uwazi:
+    image: uwazi
     build:
       context: .
       dockerfile: Dockerfile
@@ -24,7 +25,7 @@ services:
       LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
 
       NODE_ENV: production 
-      FILES_ROOT_PATH: /home/uwazi/uwazi/
+      FILES_ROOT_PATH: /root/latest/
     volumes:
       - uwazi:/data
     networks:
@@ -35,10 +36,8 @@ volumes:
   uwazi:
 networks:
   uwazi:
-  dependencies:
     external: true
-    name: uwazi_dependencies
+    name: dependencies_uwazi 
   proxy:
     external: true
     name: http-proxy_proxy
-

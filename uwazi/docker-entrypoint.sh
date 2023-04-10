@@ -3,7 +3,7 @@
 set -Ee
 
 # evaluate first run or not first run
-DB_URL"mongodb://$MONGODB_HOST:27017"
+DB_URL="mongodb://$DBHOST:27017"
 DB_DOES_NOT_EXISTS=$(mongosh --quiet $DB_URL --eval "db.getMongo().getDBNames().indexOf('$DATABASE_NAME') == -1" | grep -q true)
 
 if $DB_DOES_NOT_EXISTS; then
