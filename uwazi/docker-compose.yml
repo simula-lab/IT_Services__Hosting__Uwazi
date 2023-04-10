@@ -5,7 +5,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        PORT: ${VIRTUAL_PORT}
     container_name: uwazi
+    expose:
+      - "${VIRTUAL_PORT:-3000}"
     restart: always
     environment:
       DBHOST: ${MONGODB_HOST:-uwazi-mongo}
@@ -30,13 +34,14 @@ services:
     volumes:
       - uwazi:/data
     networks:
-      - uwazi
+      - dependencies 
       - proxy
 
 volumes:
   uwazi:
+
 networks:
-  uwazi:
+  dependencies:
     external: true
     name: dependencies_uwazi 
   proxy:
